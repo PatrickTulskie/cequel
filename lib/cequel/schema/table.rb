@@ -59,6 +59,7 @@ module Cequel
       # @see #add_partition_key
       #
       def add_key(name, type, clustering_order = nil)
+        return if key_column_names.include?(name)
         if @partition_key_columns.empty?
           unless clustering_order.nil?
             fail ArgumentError,
@@ -288,6 +289,7 @@ module Cequel
       private
 
       def add_column(column)
+        return column if columns.include?(column)
         columns << column
         columns_by_name[column.name] = column
       end
